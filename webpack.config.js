@@ -56,6 +56,7 @@ const clientConfig = {
   target: "web",
   entry: {
     app: path.resolve(__dirname, "./src/client/index.js"),
+    //search: path.resolve(__dirname, "./src/client/search.js"),
   },
 //   plugins: [
 //     new MiniCSSExtractPlugin({

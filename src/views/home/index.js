@@ -1,11 +1,10 @@
 import React from "react";
 import Search from "../../components/search";
 
-const Home = () => {
+const Home = (props) => {
   return (
     <div>
-      La home
-      <Search />
+      <Search {...props} />
     </div>
   );
 };

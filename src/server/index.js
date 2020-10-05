@@ -6,18 +6,21 @@ import template from "./template";
 import axios from "axios";
 
 import App from "../shared/app";
-import { stat } from "fs";
+import Listing from "../components/search";
 
 const app = express();
 
-app.use("/static", express.static(path.resolve(__dirname, "../public")));
-
-const initialState = {
-  name: "pablo",
-  capo: true,
+const props = {
+  author: {
+    name: "Pablo",
+    lastname: "Montesano",
+  },
 };
 
+app.use("/static", express.static(path.resolve(__dirname, "../public")));
+
 app.get("/", (req, res) => {
+  const initialState = {};
   const component = ReactDOMServer.renderToString(
     <App {...{ ...initialState }} />
   );
@@ -28,7 +31,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/items", (req, res) => {
-  const query = req.query.search;
+  const query = req.query;
   axios
     .get("https://api.mercadolibre.com/sites/MLA/search", {
       params: { q: query, limit: 5 },
@@ -44,16 +47,22 @@ app.get("/api/items", (req, res) => {
 });
 
 app.get("/items", (req, res) => {
-  const query = req.query.q;
-  let props = {};
+  const query = req.query.search;
 
   axios
-    .get(`http://localhost:3000/api/items`, { params: { q: query } })
+    .get(`http://localhost:3000/api/items`, { params: { search: query } })
     .then((response) => {
-      console.log("pepe", response.data);
+      const initialState = {
+        items: response.data.results,
+        ...props,
+      };
 
-      props = response.data;
-      res.send(response.data);
+      const component = ReactDOMServer.renderToString(
+        <Listing {...{ ...initialState }} />
+      );
+
+      const html = template(component, initialState);
+      res.send(html);
     })
     .catch((error) => {
       // handle error

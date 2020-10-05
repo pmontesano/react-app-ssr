@@ -1,13 +1,13 @@
 import React from "react";
-import { render } from "react-dom";
 import Menu from "../components/menu";
 import Home from "../views/home";
 
-const App = ({ name, capo }) => {
+const App = (props) => {
+  console.log("a la app pepe-->", props);
   return (
     <div class="ml-app">
       <Menu />
-      <Home />
+      <Home {...props} />
     </div>
   );
 };
