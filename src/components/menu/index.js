@@ -6,7 +6,7 @@ const namespace = "ml-menu";
 const Menu = ({ onchangeInput, onClick }) => (
   <div className={namespace}>
     <a href="#" className="logo">
-      <img src="../static/images/logo.png" alt="Mercadolibre" />
+      <img src="../images/logo.png" alt="Mercadolibre" />
     </a>
 
     <div className={`${namespace}-search`}>

@@ -33,9 +33,7 @@ var props = {
   items: [],
   categories: []
 };
-app.use("/static", _express["default"]["static"](_path["default"].resolve(__dirname, "../public"))); // app.use("/", express.static(path.join(__dirname, "../build")));
-// app.use("/static", express.static(path.join(__dirname, "../src/static")));
-
+app.use("/static", _express["default"]["static"](_path["default"].resolve(__dirname, "../public")));
 var getlistingService = (0, _listingService.listingService)(_axios["default"], _listingService.EnvType.SERVER);
 app.get("/", function (req, res) {
   var initialState = _objectSpread({}, props);

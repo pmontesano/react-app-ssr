@@ -23,7 +23,10 @@ var Menu = function Menu(_ref) {
   }, /*#__PURE__*/_react["default"].createElement("a", {
     href: "#",
     className: "logo"
-  }), /*#__PURE__*/_react["default"].createElement("div", {
+  }, /*#__PURE__*/_react["default"].createElement("img", {
+    src: "../static/images/logo.png",
+    alt: "Mercadolibre"
+  })), /*#__PURE__*/_react["default"].createElement("div", {
     className: "".concat(namespace, "-search")
   }, /*#__PURE__*/_react["default"].createElement("input", {
     type: "text",

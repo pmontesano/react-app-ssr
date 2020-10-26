@@ -19,8 +19,12 @@ const css = {
 };
 
 const img = {
-  test: /\.(woff2?|jpe?g|png|gif|ico)$/,
-  use: "file-loader?name=./assets/images/[name].[ext]",
+  test: /\.(png|jpe?g|gif)$/i,
+  use: [
+    {
+      loader: "file-loader",
+    },
+  ],
 };
 
 // webpack.config.js
