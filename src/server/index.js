@@ -4,9 +4,9 @@ import React from "react";
 import ReactDOMServer from "react-dom/server";
 import template from "./template";
 import axios from "axios";
+import { listingService, EnvType } from "../shared/services/listingService";
 
 import App from "../shared/app";
-import Listing from "../components/search";
 
 const app = express();
 
@@ -15,12 +15,18 @@ const props = {
     name: "Pablo",
     lastname: "Montesano",
   },
+  items: [],
+  categories: [],
 };
 
 app.use("/static", express.static(path.resolve(__dirname, "../public")));
 
+const getlistingService = listingService(axios, EnvType.SERVER);
+
 app.get("/", (req, res) => {
-  const initialState = {};
+  const initialState = {
+    ...props,
+  };
   const component = ReactDOMServer.renderToString(
     <App {...{ ...initialState }} />
   );
@@ -31,11 +37,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/items", (req, res) => {
-  const query = req.query;
-  axios
-    .get("https://api.mercadolibre.com/sites/MLA/search", {
-      params: { q: query, limit: 5 },
-    })
+  getlistingService
+    .search({ search: req.query.search, limit: 5 })
     .then((response) => {
       // handle success
       res.json(response.data);
@@ -47,18 +50,28 @@ app.get("/api/items", (req, res) => {
 });
 
 app.get("/items", (req, res) => {
-  const query = req.query.search;
-
-  axios
-    .get(`http://localhost:3000/api/items`, { params: { search: query } })
+  getlistingService
+    .search({ search: req.query.search, limit: 5 })
     .then((response) => {
+      console.log("pepe response.data", response.data);
+      const results = response.data.results.map((item) => {
+        return {
+          id: item.id,
+          title: item.title,
+          price: {
+            currency: item.currency_id,
+            amount: item.price,
+          },
+        };
+      });
       const initialState = {
-        items: response.data.results,
         ...props,
+        categories: response.data.available_filters,
+        items: results,
       };
 
       const component = ReactDOMServer.renderToString(
-        <Listing {...{ ...initialState }} />
+        <App {...{ ...initialState }} />
       );
 
       const html = template(component, initialState);

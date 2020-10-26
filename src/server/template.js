@@ -5,6 +5,8 @@ module.exports = (component, initialState) => `
                 <script>window.__INITIAL__DATA__ = ${JSON.stringify({
                   initialState,
                 })}</script>
+                <link rel="stylesheet" type="text/css" href="static/app.css" />
+                
             </head>
             <body>
                 <div id="root">${component}</div>

@@ -4,7 +4,7 @@ import Search from "../../components/search";
 const Home = (props) => {
   return (
     <div>
-      <Search {...props} />
+      <Search />
     </div>
   );
 };

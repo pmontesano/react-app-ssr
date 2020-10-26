@@ -1,16 +1,25 @@
 import React from "react";
 
-const Search = ({ items, author }) => {
-  console.log("search pepe-->", items);
+const namespace = "ml-search__list";
+
+const Search = ({ items, breadcrumb }) => {
+  console.log("search initialState", items);
+  console.log("search categories", breadcrumb);
 
   return (
     <div>
-      Search
-      {items && items.map((item) => {
-        <li>{item.title}</li>
-
-      })}
-      
+      <ul className="ml-bredcrumbs">
+        {breadcrumb.length > 0 &&
+          breadcrumb.map((cat) => <li key={cat.name}>{cat.name}</li>)}
+      </ul>
+      <ul className={namespace}>
+        {items.length > 0 &&
+          items.map((item) => (
+            <li key={item.title}>
+              <a href={`/item/${item.id}`}>{item.title}</a>
+            </li>
+          ))}
+      </ul>
     </div>
   );
 };

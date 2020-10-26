@@ -1,34 +1,30 @@
 import React, { useState } from "react";
 import IconSearch from "../../images/icons/search-icon";
 
-const namespace = "ml-search";
+const namespace = "ml-menu";
 
-const Menu = (props) => {
-  const [value, setValue] = useState();
+const Menu = ({ onchangeInput, onClick }) => (
+  <div className={namespace}>
+    <a href="#" className="logo">
+      <img src="../static/images/logo.png" alt="Mercadolibre" />
+    </a>
 
-  const onchangeInput = (value) => {
-    console.log("tipeando...", value);
-    setValue(value);
-  };
-
-  return (
-    <div className={namespace}>
-      <form action="/items" method="get">
-        <input
-          type="text"
-          className={`${namespace}__input`}
-          value={value}
-          placeholder="Buscar productos, marcas y más…"
-          name={"name"}
-          onChange={(e) => onchangeInput(e.target.value)}
-        />
-        <input hidden name="search" value={value} />
-        <button type="submit" className={`${namespace}__button`}>
-          <IconSearch /> Buscar
-        </button>
-      </form>
+    <div className={`${namespace}-search`}>
+      <input
+        type="text"
+        className={`${namespace}-search__input`}
+        placeholder="Buscar productos, marcas y más…"
+        onChange={(e) => onchangeInput(e.target.value)}
+      />
+      <button
+        onClick={onClick}
+        type="submit"
+        className={`${namespace}-search__button`}
+      >
+        <IconSearch />
+      </button>
     </div>
-  );
-};
+  </div>
+);
 
 export default Menu;

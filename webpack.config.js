@@ -1,7 +1,6 @@
 const webpack = require("webpack");
-//const nodeExternals = require("webpack-node-externals");
 const path = require("path");
-// const MiniCSSExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const js = {
   test: /\.js$/,
@@ -16,7 +15,12 @@ const js = {
 
 const css = {
   test: /\.scss$/,
-//   loader: [MiniCSSExtractPlugin.loader, "css-loader", "sass-loader"],
+  loader: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+};
+
+const img = {
+  test: /\.(woff2?|jpe?g|png|gif|ico)$/,
+  use: "file-loader?name=./assets/images/[name].[ext]",
 };
 
 // webpack.config.js
@@ -27,52 +31,50 @@ const serverConfig = {
   node: {
     __dirname: false,
   },
-//   externals: [nodeExternals()],
   entry: {
     server: path.resolve(__dirname, "./src/server/index.js"),
   },
-//   plugins: [
-//     new MiniCSSExtractPlugin({
-//       filename: "[name].css",
-//       chunkFilename: "[id].css",
-//     }),
-//   ],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css",
+    }),
+  ],
   module: {
-    rules: [js],
+    rules: [js, css, img],
   },
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "[name].js",
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: [".js", ".jsx", ".json"],
   },
 };
 
 // webpack.config.js
 const clientConfig = {
-  name: "client",  
+  name: "client",
   mode: "development",
   target: "web",
   entry: {
     app: path.resolve(__dirname, "./src/client/index.js"),
-    //search: path.resolve(__dirname, "./src/client/search.js"),
   },
-//   plugins: [
-//     new MiniCSSExtractPlugin({
-//       filename: "[name].css",
-//       chunkFilename: "[id].css",
-//     }),
-//   ],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css",
+    }),
+  ],
   module: {
-    rules: [js],
+    rules: [js, css, img],
   },
   output: {
     path: path.resolve(__dirname, "public"),
     filename: "[name].js",
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: [".js", ".jsx", ".json"],
   },
 };
 
