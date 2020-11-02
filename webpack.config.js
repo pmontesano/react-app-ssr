@@ -33,7 +33,7 @@ const serverConfig = {
   mode: "development",
   target: "node",
   node: {
-    __dirname: false,
+    __dirname: true,
   },
   entry: {
     server: path.resolve(__dirname, "./src/server/index.js"),
