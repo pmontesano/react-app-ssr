@@ -5,6 +5,7 @@ import ReactDOMServer from "react-dom/server";
 import template from "./template";
 import axios from "axios";
 import { listingService, EnvType } from "../shared/services/listingService";
+import { getItemsFromResponse } from "./utils";
 
 import App from "../shared/app";
 
@@ -20,6 +21,7 @@ const props = {
 };
 
 app.use("/static", express.static(path.resolve(__dirname, "../public")));
+// app.use("/static", express.static(path.join(__dirname, "../src/images")));
 
 const getlistingService = listingService(axios, EnvType.SERVER);
 
@@ -27,6 +29,8 @@ app.get("/", (req, res) => {
   const initialState = {
     ...props,
   };
+
+  console.log("pepe", path.join(__dirname, "../src/static"));
   const component = ReactDOMServer.renderToString(
     <App {...{ ...initialState }} />
   );
@@ -53,21 +57,10 @@ app.get("/items", (req, res) => {
   getlistingService
     .search({ search: req.query.search, limit: 5 })
     .then((response) => {
-      console.log("pepe response.data", response.data);
-      const results = response.data.results.map((item) => {
-        return {
-          id: item.id,
-          title: item.title,
-          price: {
-            currency: item.currency_id,
-            amount: item.price,
-          },
-        };
-      });
       const initialState = {
         ...props,
         categories: response.data.available_filters,
-        items: results,
+        items: getItemsFromResponse(response),
       };
 
       const component = ReactDOMServer.renderToString(

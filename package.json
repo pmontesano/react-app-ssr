@@ -11,7 +11,8 @@
     "start-dev": "nodemon build/server.js",
     "debug": "nodemon --inspect=9230 build/server.js",
     "start": "node build/server.js",
-    "watch": "webpack --watch",
+    "watch": "FACTABLE_TRANSPILE=6789 webpack --watch",
+    "factable-server": "factable-server-run 6789",
     "build": "webpack",
     "dev": "webpack && concurrently \"webpack --watch\" \"nodemon dist\""
   },
@@ -33,6 +34,7 @@
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
     "css-loader": "^5.0.0",
+    "factable": "^1.0.0-alpha.8",
     "file-loader": "^6.1.1",
     "mini-css-extract-plugin": "^1.0.0",
     "node-sass": "^4.14.1",

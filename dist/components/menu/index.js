@@ -24,7 +24,7 @@ var Menu = function Menu(_ref) {
     href: "#",
     className: "logo"
   }, /*#__PURE__*/_react["default"].createElement("img", {
-    src: "../static/images/logo.png",
+    src: "../images/logo.png",
     alt: "Mercadolibre"
   })), /*#__PURE__*/_react["default"].createElement("div", {
     className: "".concat(namespace, "-search")

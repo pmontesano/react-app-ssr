@@ -33,10 +33,13 @@ var props = {
   items: [],
   categories: []
 };
-app.use("/static", _express["default"]["static"](_path["default"].resolve(__dirname, "../public")));
+app.use("/static", _express["default"]["static"](_path["default"].resolve(__dirname, "../public"))); // app.use("/static", express.static(path.join(__dirname, "../src/images")));
+
 var getlistingService = (0, _listingService.listingService)(_axios["default"], _listingService.EnvType.SERVER);
 app.get("/", function (req, res) {
   var initialState = _objectSpread({}, props);
+
+  console.log("pepe", _path["default"].join(__dirname, "../src/static"));
 
   var component = _server["default"].renderToString( /*#__PURE__*/_react["default"].createElement(_app["default"], _objectSpread({}, initialState)));
 
